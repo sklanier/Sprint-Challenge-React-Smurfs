@@ -1,53 +1,71 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class SmurfForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      age: '',
-      height: ''
+      name: "",
+      age: "",
+      height: ""
     };
   }
-
-  addSmurf = event => {
-    event.preventDefault();
-    // add code to create the smurf using the api
-
-    this.setState({
-      name: '',
-      age: '',
-      height: ''
-    });
-  }
+  
 
   handleInputChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  add = (e, obj) => {
+    e.preventDefault();
+    this.props.addSmurf(e, obj)
+    this.setState({name: '', age: '', height: ''})
+  }
+
   render() {
     return (
-      <div className="SmurfForm">
-        <form onSubmit={this.addSmurf}>
-          <input
-            onChange={this.handleInputChange}
-            placeholder="name"
-            value={this.state.name}
-            name="name"
-          />
-          <input
-            onChange={this.handleInputChange}
-            placeholder="age"
-            value={this.state.age}
-            name="age"
-          />
-          <input
-            onChange={this.handleInputChange}
-            placeholder="height"
-            value={this.state.height}
-            name="height"
-          />
-          <button type="submit">Add to the village</button>
+      <div className="SmurfFormStyles">
+        <form updateSmurf={this.props.updateSmurf}
+          onSubmit={e =>
+            this.add(e, {
+              name: this.state.name,
+              age: this.state.age,
+              height: this.state.height
+            }) 
+          }
+        ><br></br>
+          <div className="container">
+            <input
+              onChange={this.handleInputChange}
+              placeholder="who's da new smurf?"
+              required
+              value={this.state.name}
+              name="name"
+            />
+          </div>
+          <br></br>
+          <div className="container">
+            <input
+              onChange={this.handleInputChange}
+              type="text"
+              placeholder="how old is dis smurf?"
+              required
+              value={this.state.age}
+              name="age"
+            />
+          </div>
+          <br></br>
+          <div className="container">
+            <input
+              onChange={this.handleInputChange}
+              placeholder="how tall is dis smurf?"
+              type="text"
+              required
+              value={this.state.height}
+              name="height"
+            />
+          </div>
+          <br></br>
+          <div className="button"><input type="submit" value="Add to the village" /></div>
         </form>
       </div>
     );

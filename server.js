@@ -15,8 +15,32 @@ const sendUserError = (msg, res) => {
 
 let smurfs = [
   {
-    id: 0,
-    name: 'Brainey Smurf',
+    id: 1,
+    name: 'Papa',
+    age: 200,
+    height: '8cm'
+  },
+  {
+    id: 2,
+    name: 'Smurfette',
+    age: 456,
+    height: '10cm'
+  },
+  {
+    id: 3,
+    name: 'Sassette',
+    age: 240,
+    height: '9cm'
+  },
+  {
+    id: 4,
+    name: 'Grouchy',
+    age: 100,
+    height: '8cm'
+  },
+  {
+    id: 5,
+    name: 'Brainy',
     age: 200,
     height: '8cm'
   }
@@ -31,7 +55,7 @@ server.post('/smurfs', (req, res) => {
   const newSmurf = { name, age, height, id: smurfId };
   if (!name || !age || !height) {
     return sendUserError(
-      'Ya gone did smurfed! Name/Age/Height are all required to create a smurf in the smurf DB.',
+      'Name, age, and height are required.',
       res
     );
   }
@@ -40,7 +64,7 @@ server.post('/smurfs', (req, res) => {
   };
   if (smurfs.find(findSmurfByName)) {
     return sendUserError(
-      `Ya gone did smurfed! ${name} already exists in the smurf DB.`,
+      `${name} already exists!`,
       res
     );
   }
@@ -58,7 +82,7 @@ server.put('/smurfs/:id', (req, res) => {
   };
   const foundSmurf = smurfs.find(findSmurfById);
   if (!foundSmurf) {
-    return sendUserError('No Smurf found by that ID', res);
+    return sendUserError('No Smurf found :(', res);
   } else {
     if (name) foundSmurf.name = name;
     if (age) foundSmurf.age = age;
@@ -76,7 +100,7 @@ server.delete('/smurfs/:id', (req, res) => {
     smurfs = smurfs.filter(smurf => smurf.id != id);
     res.status(200).json(smurfs);
   } else {
-    sendUserError('No smurf by that ID exists in the smurf DB', res);
+    sendUserError('No smurf found :(', res);
   }
 });
 
